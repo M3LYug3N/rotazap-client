@@ -1,0 +1,56 @@
+.react-datepicker {
+  border: none;
+  border-radius: 12px;
+  font-family: inherit;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+}
+
+/* Ячейки дней */
+.react-datepicker__day {
+  border-radius: 6px;
+  line-height: 2.2rem;
+  font-weight: 500;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+/* Наведение */
+.react-datepicker__day:hover {
+  background-color: #f0f0f0;
+}
+
+/* Диапазон — внутри */
+.react-datepicker__day--in-range {
+  background-color: var(--color-peach);
+  color: white;
+}
+
+/* Начало диапазона */
+.react-datepicker__day--range-start {
+  border-radius: 6px 0 0 6px;
+  background-color: var(--color-peach-dark);
+  color: white;
+}
+
+/* Конец диапазона */
+.react-datepicker__day--range-end {
+  border-radius: 0 6px 6px 0;
+  background-color: var(--color-peach-dark);
+  color: white;
+}
+
+/* Один выбранный день */
+.react-datepicker__day--selected:not(.react-datepicker__day--in-range) {
+  background-color: var(--color-peach-dark);
+  color: white;
+}
+
+/* Навигация стрелки */
+.react-datepicker__navigation {
+  top: 12px;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: #333;
+}

@@ -1,0 +1,126 @@
+.button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 120px;
+  border-radius: var(--border-radius);
+  line-height: 0;
+  font-weight: 700;
+  color: var(--color-white);
+  letter-spacing: 0.1em;
+  box-shadow: var(--box-shadow);
+}
+
+.buttonTransform {
+  overflow: hidden;
+  transition: var(--transition-all);
+  cursor: pointer;
+}
+
+/* Варианты кнопок */
+.buttonPrimary {
+  background-color: var(--bg-blue-dark);
+}
+
+.buttonPrimaryOutline {
+  border: 1px solid var(--bg-blue-dark);
+  color: var(--bg-blue-dark);
+}
+
+@media (width >= 769px) {
+  .button:active {
+    opacity: var(--opacity);
+  }
+
+  .button:not(.buttonDisabled, .buttonLoading):hover {
+    &.buttonPrimary {
+      background-color: var(--hover-blue-dark);
+      box-shadow: var(--box-shadow-hover);
+    }
+
+    &.buttonPrimaryOutline {
+      color: var(--hover-blue-dark);
+      box-shadow: var(--box-shadow-hover);
+      border-color: var(--hover-blue-dark);
+    }
+
+    &.buttonSecondary {
+      background-color: var(--hover-peach);
+    }
+
+    &.buttonSecondaryOutline {
+      color: var(--hover-peach);
+      box-shadow: var(--box-shadow-hover);
+      border-color: var(--hover-peach);
+    }
+  }
+}
+
+.buttonSecondary {
+  background-color: var(--bg-peach);
+}
+
+.buttonSecondaryOutline {
+  border: 1px solid var(--color-peach);
+  color: var(--color-peach);
+}
+
+/* Размеры кнопок */
+.buttonSmall {
+  height: 40px;
+  padding: 4px 8px;
+  font-size: 14px;
+}
+
+.buttonMedium {
+  height: 48px;
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.buttonLarge {
+  height: 56px;
+  padding: 12px 20px;
+  font-size: 18px;
+}
+
+/* Стили для disabled */
+.buttonDisabled {
+  border: none;
+  background-color: var(--bg-disabled);
+  color: var(--color-disabled);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Стили для состояния loading */
+.buttonLoading {
+  &.buttonPrimary {
+    background-color: var(--hover-blue-dark);
+  }
+
+  &.buttonSecondary {
+    background-color: var(--hover-peach);
+  }
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-white);
+  border-radius: 100%;
+  animation: spin 1s linear infinite;
+  border-top-color: transparent;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}

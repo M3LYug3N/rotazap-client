@@ -1,0 +1,52 @@
+.home {
+  width: 100%;
+}
+
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: response(10, 20, md);
+  width: 100%;
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+
+  @media (width <= 520px) {
+    font-size: 20px;
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotateIcon {
+  display: none;
+}
+
+@media (width >= 769px) {
+  .rotateIcon {
+    display: inline-block;
+    animation: spin-slow 6s linear infinite;
+  }
+}
+
+.text {
+  font-size: 14px;
+  color: var(--color-black-light);
+  text-align: center;
+}

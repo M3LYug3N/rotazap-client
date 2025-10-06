@@ -1,0 +1,8 @@
+/* IconLogo */
+.iconLogo {
+  width: response(55, 70, sm);
+}
+
+.iconLogoLoading {
+  width: 240px;
+}

@@ -1,0 +1,266 @@
+@import "tailwindcss";
+
+@theme {
+  /* Background colors */
+  --bg-blue-dark: #1b2f52; /* Blue Dark */
+  --bg-peach: #f76435; /* Peach */
+  --bg-white: #fff; /* White */
+  --bg-gray: #f5f5f5; /* Gray */
+  --bg-blue-light: #f0f5ff; /* Blue Light */
+  --bg-disabled: #d1d5dc; /* Gray Dark: disabled button */
+
+  /* Text colors */
+  --color-blue-dark: #1b2f52; /* Blue Dark */
+  --color-black: #1b1f20; /* Black: color for title + text */
+  --color-black-light: #3a3a3a; /* Black Light: color for subtitle */
+  --color-peach: #f76435; /* Peach: links, dividers */
+  --color-error: #b00000; /* Red: error */
+  --color-white: #fff; /* White: header-title, button */
+  --color-disabled: #969ba5; /* Gray: text in disabled-button */
+
+  /* Hover */
+  --hover-blue-dark: #2a4a74;
+  --hover-peach: #e77c58;
+
+  /* Borders */
+  --border-head: #d1d5dc;
+  --border-body: #e5e5e5;
+  --border-input: #c4c4c4;
+
+  /* Effects */
+  --border-radius: 6px;
+  --border-radius-input: 4px;
+  --box-shadow: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
+  --box-shadow-hover:
+    0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
+  --transition-all: all 0.2s ease-in-out;
+  --transition-color: color 0.2s ease-in-out;
+  --transition-background-color: background-color 0.2s ease-in-out;
+  --opacity: 0.7;
+}
+
+body {
+  position: relative;
+  overflow: hidden scroll;
+  background-color: var(--bg-white);
+  font-family: var(--font-roboto);
+  font-size: 16px;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+section {
+  margin: 32px 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-ibm);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: response(22, 32, lg);
+}
+
+h2 {
+  font-size: response(18, 26, lg);
+}
+
+h3 {
+  font-size: response(16, 22, lg);
+}
+
+h4,
+h5,
+h6 {
+  font-size: response(16, 22, lg);
+}
+
+li {
+  text-decoration: none;
+  list-style: none;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1475px;
+  padding: 0 40px;
+  margin: 0 auto;
+
+  @media (width <= 1024px) {
+    padding: 0 20px;
+  }
+
+  @media (width <= 768px) {
+    padding: 0 15px;
+  }
+
+  @media (width <= 490px) {
+    padding: 0 10px;
+  }
+}
+
+.link {
+  font-weight: 700;
+  color: var(--color-peach);
+  text-decoration: none;
+  transition: var(--transition-all);
+  cursor: pointer;
+
+  @media (width >= 769px) {
+    &:hover {
+      color: var(--hover-peach);
+    }
+
+    &:active {
+      opacity: var(--opacity);
+    }
+  }
+}
+
+/* Close button */
+.closeButton {
+  color: var(--color-blue-dark);
+  transition: var(--transition-all);
+  cursor: pointer;
+
+  @media (width >= 769px) {
+    &:hover {
+      color: var(--hover-peach);
+    }
+
+    &:active {
+      opacity: var(--opacity);
+    }
+  }
+}
+
+input:-webkit-autofill {
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+/* Office pages  */
+.officePage {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.officePageContainer {
+  position: relative;
+  display: flex;
+  column-gap: 40px;
+  width: 100%;
+}
+
+.officePageTitle {
+  font-size: 24px;
+  line-height: 1.3;
+}
+
+.officePageContent {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 20px 10px 10px;
+  border: 1px solid var(--border-body);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+}
+
+/* Spinner */
+.spinnerWrapper {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(0 0 0 / 30%);
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+  inset: 0;
+}
+
+/* LoadingBox для HeaderBottom */
+.loadingBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+  background-color: #f5f5f5;
+  z-index: 9999;
+}
+
+@media (width <= 900px) {
+  .loadingBox {
+    height: 150px;
+  }
+}
+
+@media (width <= 600px) {
+  .loadingBox {
+    height: 216px;
+  }
+}
+
+/* Toastify */
+section.Toastify {
+  display: contents;
+  all: unset;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: var(--bg-white);
+}
+
+::-webkit-scrollbar-thumb {
+  width: 8px;
+  border-radius: 50px;
+  background-color: var(--bg-peach);
+}
+
+:-moz-focusring {
+  outline: none;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.MuiInputLabel-root {
+  top: -8px !important; /* позиция для label в StyledSelect */
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.MuiFormHelperText-root {
+  position: absolute !important; /* позиция helperText для StyledSelect */
+  top: -20px !important;
+  right: -10px !important;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.MuiFormControl-root,
+/* stylelint-disable-next-line selector-class-pattern */
+.MuiFormControl-root-MuiTextField-root {
+  margin-top: 4px !important;
+}

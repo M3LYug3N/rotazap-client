@@ -1,0 +1,56 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.formElementsContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.filterContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  @media (width <= 1024px) {
+    flex-direction: column;
+    row-gap: 20px;
+    margin: 0;
+  }
+}
+
+/* OrderInfo внутри модального окна */
+.orderInfoContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.orderInfoHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.orderInfoTitle {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.orderInfoList {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.orderInfoItem {
+  display: flex;
+  column-gap: 10px;
+}
+
+.orderInfoItem span {
+  min-width: 140px;
+  font-weight: 700;
+}

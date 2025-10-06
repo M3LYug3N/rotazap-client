@@ -1,0 +1,101 @@
+/* UserInfo */
+
+.userInfo,
+.title,
+.subtitle {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.title {
+  overflow: hidden;
+  max-width: 200px;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: 700;
+}
+
+.subtitle {
+  overflow: hidden;
+  max-width: 200px;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+/* UserMenu */
+.sidebar {
+  position: sticky;
+  top: 0;
+  width: 280px;
+  padding: 8px;
+  border: 1px solid var(--border-body);
+  border-radius: var(--border-radius);
+  font-size: 18px;
+  line-height: 28px;
+  box-shadow: var(--box-shadow);
+
+  @media (width <= 1024px) {
+    width: 58px;
+  }
+}
+
+.link,
+.linkSidebar {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  font-weight: 700;
+  transition: var(--transition-all);
+}
+
+.linkSidebar {
+  @media (width <= 1024px) {
+    width: 40px;
+    padding: 8px;
+
+    p {
+      display: none;
+    }
+  }
+}
+
+@media (width >= 769px) {
+  .link:hover {
+    background-color: var(--bg-blue-dark);
+    color: var(--color-white);
+  }
+
+  .link:active {
+    opacity: var(--opacity);
+  }
+
+  .linkSidebar:hover {
+    background-color: var(--bg-blue-dark);
+    color: var(--color-white);
+  }
+
+  .linkSidebar:active {
+    opacity: var(--opacity);
+  }
+}
+
+.activeLink {
+  background-color: var(--bg-blue-dark);
+  color: var(--color-white);
+}
+
+.disabledLink {
+  opacity: var(--opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}

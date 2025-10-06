@@ -1,0 +1,250 @@
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 50;
+}
+
+/* HeaderTop */
+.headerTop {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100px;
+  background-color: var(--bg-blue-dark);
+
+  @media (width <= 768px) {
+    height: 80px;
+  }
+
+  &::after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: var(--bg-white);
+  }
+}
+
+/* HeaderBottom */
+.headerBottom {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  background-color: var(--bg-gray);
+
+  @media (width <= 900px) {
+    height: 150px;
+  }
+
+  @media (width <= 606px) {
+    height: 100%;
+    padding: 10px 0;
+  }
+}
+
+.headerBottomContainer {
+  display: grid;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  grid-template-columns: 1fr auto auto;
+}
+
+@media (width <= 900px) {
+  .headerBottomContainer {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+  }
+
+  .headerBottomContainer > :nth-child(1) {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+
+  /* Корзина — левая половина верхней строки */
+  .headerBottomContainer > :nth-child(2) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  /* Пользователь — правая половина верхней строки */
+  .headerBottomContainer > :nth-child(3) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}
+
+@media (width <= 600px) {
+  .headerBottomContainer {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  /* Переставляем порядок */
+  .headerBottomContainer > :nth-child(3) {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .headerBottomContainer > :nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .headerBottomContainer > :nth-child(1) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}
+
+.headerContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  column-gap: 40px;
+  width: 100%;
+
+  @media (width <= 900px) {
+    justify-content: center;
+  }
+}
+
+/* HeaderLogo */
+.logoContainer {
+  display: flex;
+  align-items: center;
+  column-gap: response(12, 16, lgmd);
+  margin-left: 20px;
+
+  @media (width <= 1024px) {
+    margin-left: 40px;
+  }
+
+  @media (width <= 768px) {
+    margin-left: 0;
+  }
+}
+
+.logoTitle {
+  font-size: response(16, 20, lgmd);
+  color: var(--color-white);
+}
+
+/* HeaderBasket */
+.basketMenu {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  width: 320px;
+  height: 60px;
+  padding: 16px;
+  border: 1px solid var(--border-body);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-white);
+  transition: var(--transition-all);
+
+  @media (width <= 900px) {
+    width: 100%;
+  }
+}
+
+.basketMenuTitle {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.basketMenuText {
+  display: block;
+}
+
+.basketMenuIconWrapper {
+  position: relative;
+
+  svg {
+    color: var(--color-blue-dark);
+  }
+}
+
+/* UserMenuOpener */
+.userMenuIconWrapper {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+  width: 240px;
+  height: 60px;
+  padding: 16px;
+  border: 1px solid var(--border-body);
+  border-radius: var(--border-radius);
+  background-color: var(--bg-white);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition-all);
+  cursor: pointer;
+
+  @media (width <= 900px) {
+    width: 100%;
+  }
+}
+
+.userMenuIcon {
+  color: var(--color-blue-dark);
+  transition: var(--transition-all);
+}
+
+.exitButtonContainer {
+  padding: 0;
+  border-top: 1px solid var(--border-body);
+  cursor: pointer;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+  transition: var(--transition-all);
+}
+
+@media (width >= 769px) {
+  .basketMenu:hover {
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  .basketMenu:hover .basketMenuIconWrapper svg {
+    color: var(--hover-blue-dark);
+  }
+
+  .basketMenu:active {
+    opacity: var(--opacity);
+  }
+
+  .link:hover {
+    background-color: var(--bg-blue-dark);
+    color: var(--color-white);
+  }
+
+  .link:active {
+    opacity: var(--opacity);
+  }
+
+  .userMenuIconWrapper:hover {
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  .userMenuIconWrapper:hover .userMenuIcon {
+    color: var(--hover-blue-dark);
+  }
+
+  .userMenuIconWrapper:active {
+    opacity: var(--opacity);
+  }
+}

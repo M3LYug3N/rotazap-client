@@ -1,0 +1,141 @@
+.section {
+  width: 100%;
+}
+
+.sectionWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  width: 100%;
+}
+
+/* Контейнер внутри секции (текст и т.д.) */
+.block {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  width: 100%;
+  padding: 32px;
+  line-height: 1.625;
+}
+
+/* Title */
+.titleWrapper {
+  align-self: flex-start;
+}
+
+.title {
+  display: inline-block;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.subtitle {
+  font-size: 18px;
+  line-height: 28px;
+  color: var(--color-black-light);
+}
+
+.titleDivider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--bg-peach);
+}
+
+/* Списки */
+.list {
+  display: flex;
+  flex-direction: column;
+  row-gap: 12px;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-blue-light);
+}
+
+.listItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: 100%;
+  line-height: 1.55;
+
+  span {
+    min-width: 60px;
+    font-weight: 700;
+    color: var(--color-black-light);
+  }
+}
+
+.sublist {
+  display: flex;
+  flex-direction: column;
+  column-gap: 12px;
+  margin-left: 12px;
+}
+
+.sublistItem {
+  display: flex;
+  row-gap: 8px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--border-body);
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+/* Metric на странице about-page */
+
+.metricsWrapper {
+  display: flex;
+  justify-content: space-around;
+  column-gap: 24px;
+  padding: 16px;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-gray);
+  box-shadow: var(--box-shadow);
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.metricNumber {
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 700;
+  color: var(--color-peach);
+}
+
+.metricDescription {
+  font-size: 14px;
+  line-height: 18px;
+  color: var(--color-black-light);
+}
+
+/* Accordion */
+.accordionContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 22px;
+  width: 100%;
+  padding: 0 64px;
+}
+
+.textBlockAccordion {
+  margin-bottom: 24px;
+  margin-left: 24px;
+}
+
+.textBlockAccordionMono {
+  margin-left: 24px;
+}

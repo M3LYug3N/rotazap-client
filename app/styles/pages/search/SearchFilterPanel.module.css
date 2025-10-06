@@ -1,0 +1,12 @@
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 10px;
+  width: 100%;
+  max-width: 700px;
+  height: 80px;
+  padding: 16px;
+  border: 1px solid var(--border-body);
+  border-radius: var(--border-radius-input);
+}

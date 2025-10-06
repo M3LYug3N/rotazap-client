@@ -1,0 +1,47 @@
+.auth {
+  width: 100%;
+}
+
+.authContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: response(17.5, 30, md);
+  width: 100%;
+  max-width: response(280, 400, md);
+  margin: 0 auto;
+}
+
+.authTitle {
+  font-size: response(20, 36, md);
+  letter-spacing: 1.8px;
+}
+
+.switchLink {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: response(16, 18, md);
+}
+
+@media (width <= 1024px) {
+  .switchLink {
+    max-width: 360px;
+  }
+}
+
+.authForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  row-gap: response(15, 25, md);
+  width: 100%;
+}
+
+.counter {
+  display: flex;
+  justify-content: end;
+  width: 100%;
+}
