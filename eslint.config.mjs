@@ -1,59 +1,62 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import typescriptParser from "@typescript-eslint/parser";
+// eslint.config.mjs
+import nextPlugin from "@next/eslint-plugin-next";
+import tsPlugin from "@typescript-eslint/eslint-plugin";
+// типы
+import tsParser from "@typescript-eslint/parser";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import prettier from "eslint-plugin-prettier";
 import reactPlugin from "eslint-plugin-react";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { FlatCompat } from "@eslint/eslintrc";
 import boundaries from "eslint-plugin-boundaries";
-import reactHooksPlugin from "eslint-plugin-react-hooks";
+import reactHooks from "eslint-plugin-react-hooks";
 import fs from "fs";
 
-// Для поддержки __dirname в ESM
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 let heavyImports = [];
-
-// Создаем FlatCompat для адаптации правил из eslintrc формата
-const compat = new FlatCompat({
-  baseDirectory: __dirname // Указываем базовую директорию
-});
-
-// Поиск тяжелых компонентов
 try {
   heavyImports = JSON.parse(
     fs.readFileSync("./.eslint-heavy-imports.json", "utf-8")
   );
-} catch (err) {
+} catch {
   console.warn(
-    "[eslint] Внимание: не найден .eslint-heavy-imports.json — запусти `npm run check:heavy`"
+    "[eslint] Внимание: не найден .eslint-heavy-imports.json — запусти `bun run check:heavy`"
   );
 }
 
-const eslintConfig = [
+/** @type {import("eslint").Linter.Config[]} */
+export default [
+  // Игноры
+  { ignores: ["node_modules/", ".next/", "dist/", "coverage/"] },
+
+  // Основные правила
   {
-    ignores: ["node_modules", "dist", ".next"] // Игнорируем ненужные директории
-  },
-  {
-    // Линтинг всех JS/TS файлов
-    files: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
+    files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
-      parser: typescriptParser,
+      parser: tsParser,
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
         ecmaFeatures: { jsx: true }
+        // если используешь type-checked правила — добавь проект:
+        // project: ["./tsconfig.json"],
+        // tsconfigRootDir: __dirname,
       }
     },
     plugins: {
-      "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": tsPlugin,
       prettier,
-      boundaries,
       react: reactPlugin,
-      "react-hooks": reactHooksPlugin
+      "react-hooks": reactHooks,
+      "jsx-a11y": jsxA11y,
+      boundaries,
+      "@next/next": nextPlugin
     },
     settings: {
+      react: { version: "detect" },
       "boundaries/include": ["app/**/*"],
       "boundaries/elements": [
         {
@@ -72,11 +75,7 @@ const eslintConfig = [
             "app/utils/**/*"
           ]
         },
-        {
-          mode: "full",
-          type: "common",
-          pattern: ["app/common/**/*"]
-        },
+        { mode: "full", type: "common", pattern: ["app/common/**/*"] },
         {
           mode: "full",
           type: "routes",
@@ -104,61 +103,53 @@ const eslintConfig = [
           capture: ["featureName"],
           pattern: ["app/features/*/**"]
         },
-        {
-          mode: "full",
-          type: "neverImport",
-          pattern: ["app/tasks/**/*"]
-        },
+        { mode: "full", type: "neverImport", pattern: ["app/tasks/**/*"] },
         {
           mode: "full",
           type: "ignored",
           pattern: ["app/tmp/**/*", "app/tests/**/*", "app/devtools/**/*"]
         },
-        {
-          mode: "full",
-          type: "group",
-          pattern: ["app/\\(main\\)/**/*"]
-        }
+        { mode: "full", type: "group", pattern: ["app/\\(main\\)/**/*"] }
       ],
       "boundaries/rules": [
-        {
-          from: "group",
-          allow: ["feature", "shared", "common"]
-        }
+        { from: "group", allow: ["feature", "shared", "common"] }
       ]
     },
-
     rules: {
-      /* semi: ["error", "always"],
-      quotes: [
-        "error",
-        "double",
-        { avoidEscape: true, allowTemplateLiterals: true }
-      ], */
-      "prettier/prettier": ["error", { endOfLine: "auto" }], // Настройки Prettier
-      "boundaries/no-unknown": ["error"], // Запрет на использование неизвестных элементов
-      "boundaries/no-unknown-files": ["error"], // Запрет на использование неизвестных файлов
-      "react/jsx-indent": ["error", 2, { indentLogicalExpressions: true }], // Отступы в JSX
-      "react/self-closing-comp": ["error", { component: true, html: true }], // Закрывающие теги для компонентов
-      "react/jsx-tag-spacing": ["error", { beforeSelfClosing: "always" }], // Пробелы перед закрывающим тегом в JSX
-      "arrow-body-style": ["error", "as-needed"], // Стиль стрелочных функций
-      "@typescript-eslint/no-unused-vars": "warn", // Предупреждение о неиспользуемых переменных
-      "@typescript-eslint/no-explicit-any": "off", // Запрет использования any
-      "comma-spacing": ["error", { before: false, after: true }], // Пробелы после запятой
-      "arrow-spacing": ["error", { before: true, after: true }], // Пробелы вокруг стрелок
-      "space-infix-ops": "error", // Пробелы вокруг операторов
-      "keyword-spacing": ["error", { before: true, after: true }], // Пробелы вокруг ключевых слов
-      "no-restricted-imports": [
-        // Запрет на импорт из определенных модулей
-        "warn",
-        {
-          paths: heavyImports
-        }
-      ]
-    }
-  },
-  // Добавляем конфигурацию Next.js через FlatCompat
-  ...compat.extends("next/core-web-vitals")
-];
+      // Next.js (замена "next/core-web-vitals" без eslint-config-next)
+      "@next/next/no-html-link-for-pages": "off", // app router
+      "@next/next/google-font-display": "off",
+      "@next/next/no-img-element": "warn",
+      "@next/next/no-page-custom-font": "off",
 
-export default eslintConfig;
+      // React / Hooks
+      "react/self-closing-comp": ["error", { component: true, html: true }],
+      "react/jsx-tag-spacing": ["error", { beforeSelfClosing: "always" }],
+      "react/jsx-indent": ["error", 2, { indentLogicalExpressions: true }],
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": "warn",
+
+      // TS / стиль
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        { argsIgnorePattern: "^_" }
+      ],
+      "@typescript-eslint/no-explicit-any": "off",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
+      "comma-spacing": ["error", { before: false, after: true }],
+      "arrow-spacing": ["error", { before: true, after: true }],
+      "space-infix-ops": "error",
+      "keyword-spacing": ["error", { before: true, after: true }],
+
+      // Boundaries
+      "boundaries/no-unknown": "error",
+      "boundaries/no-unknown-files": "error",
+
+      // Prettier как правило (если нужен)
+      "prettier/prettier": ["error", { endOfLine: "auto" }],
+
+      // Тяжёлые импорты
+      "no-restricted-imports": ["warn", { paths: heavyImports }]
+    }
+  }
+];
