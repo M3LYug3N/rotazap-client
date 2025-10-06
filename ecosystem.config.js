@@ -2,11 +2,12 @@ module.exports = {
   apps: [
     {
       name: "client",
-      script: "bun",
+      script: "/home/rotazap/.bun/bin/bun",
       args: "run start",
-      cwd: "/home/rotazap/client",
+      cwd: "/home/rotazap/rotazap-client",
       env: {
-        NODE_ENV: "production"
+        NODE_ENV: "production",
+        PORT: "3000"
       }
     }
   ]
