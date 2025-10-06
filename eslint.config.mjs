@@ -1,13 +1,12 @@
 // eslint.config.mjs
-import nextPlugin from "@next/eslint-plugin-next";
+import nextPluginRaw from "@next/eslint-plugin-next";
 import tsPlugin from "@typescript-eslint/eslint-plugin";
-// типы
 import tsParser from "@typescript-eslint/parser";
-import jsxA11y from "eslint-plugin-jsx-a11y";
 import prettier from "eslint-plugin-prettier";
 import reactPlugin from "eslint-plugin-react";
+import { createRequire } from "module";
 import path from "path";
-import { fileURLToPath } from "url";
+import { fileURLToPath, pathToFileURL } from "url";
 
 import boundaries from "eslint-plugin-boundaries";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -15,7 +14,35 @@ import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
 
+// normalize default export
+const def = m => (m && m.default) || m;
+
+// безопасная загрузка ESM/CJS плагина
+function resolveModule(name) {
+  try {
+    return import.meta.resolve(name); // URL
+  } catch {
+    return require.resolve(name); // fs path
+  }
+}
+async function tryLoad(name) {
+  try {
+    const spec = resolveModule(name);
+    const href = spec.startsWith("file:") ? spec : pathToFileURL(spec).href;
+    const mod = await import(href);
+    return def(mod);
+  } catch {
+    return null;
+  }
+}
+
+// jsx-a11y делаем опциональным
+const jsxA11y = await tryLoad("eslint-plugin-jsx-a11y");
+const nextPlugin = def(nextPluginRaw);
+
+// тяжёлые импорты
 let heavyImports = [];
 try {
   heavyImports = JSON.parse(
@@ -29,10 +56,7 @@ try {
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
-  // Игноры
   { ignores: ["node_modules/", ".next/", "dist/", "coverage/"] },
-
-  // Основные правила
   {
     files: ["**/*.{ts,tsx,js,jsx}"],
     languageOptions: {
@@ -41,7 +65,7 @@ export default [
         ecmaVersion: "latest",
         sourceType: "module",
         ecmaFeatures: { jsx: true }
-        // если используешь type-checked правила — добавь проект:
+        // при необходимости type-aware правила:
         // project: ["./tsconfig.json"],
         // tsconfigRootDir: __dirname,
       }
@@ -51,7 +75,7 @@ export default [
       prettier,
       react: reactPlugin,
       "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
+      ...(jsxA11y ? { "jsx-a11y": jsxA11y } : {}), // ← подключаем только если есть
       boundaries,
       "@next/next": nextPlugin
     },
@@ -116,8 +140,8 @@ export default [
       ]
     },
     rules: {
-      // Next.js (замена "next/core-web-vitals" без eslint-config-next)
-      "@next/next/no-html-link-for-pages": "off", // app router
+      // Next.js (без eslint-config-next)
+      "@next/next/no-html-link-for-pages": "off",
       "@next/next/google-font-display": "off",
       "@next/next/no-img-element": "warn",
       "@next/next/no-page-custom-font": "off",
@@ -145,10 +169,10 @@ export default [
       "boundaries/no-unknown": "error",
       "boundaries/no-unknown-files": "error",
 
-      // Prettier как правило (если нужен)
+      // Prettier-как-правило
       "prettier/prettier": ["error", { endOfLine: "auto" }],
 
-      // Тяжёлые импорты
+      // тяжёлые импорты
       "no-restricted-imports": ["warn", { paths: heavyImports }]
     }
   }
